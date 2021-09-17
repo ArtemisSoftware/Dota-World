@@ -26,21 +26,23 @@ class GetHeros(
             catch (e: Exception){
                 e.printStackTrace() // log to crashlytics?
 
-                emit(DataState.Response<List<Hero>>(
-                    uiComponent = UIComponent.Dialog(title = "Network Data Error", description = e.message?: "Unknown error")
-                ))
+                emit(DataState.Response<List<Hero>>(uiComponent = UIComponent.Dialog(title = "Network Data Error", description = e.message?: "Unknown error")))
                 listOf()
             }
 
             emit(DataState.Data(heros))
+
+
         }catch (e: Exception){
             e.printStackTrace()
+
             emit(DataState.Response<List<Hero>>(
                 uiComponent = UIComponent.Dialog(
                     title = "Error",
                     description = e.message?: "Unknown error"
                 )
             ))
+
         }
 
         finally {
