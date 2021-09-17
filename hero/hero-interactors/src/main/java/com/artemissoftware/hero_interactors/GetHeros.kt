@@ -3,13 +3,14 @@ package com.artemissoftware.hero_interactors
 import com.artemissoftware.core.DataState
 import com.artemissoftware.core.ProgressBarState
 import com.artemissoftware.core.UIComponent
+import com.artemissoftware.hero_datasource.cache.HeroCache
 import com.artemissoftware.hero_datasource.network.HeroService
 import com.artemissoftware.hero_domain.Hero
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetHeros(
-    // TODO(Add caching)
+    private val cache: HeroCache,
     private val service: HeroService,
 ) {
 
@@ -30,7 +31,14 @@ class GetHeros(
                 listOf()
             }
 
-            emit(DataState.Data(heros))
+
+
+            //cache the network data
+            cache.insert(heros)
+
+            val cachedHeros = cache.selectAll()
+
+            emit(DataState.Data(cachedHeros))
 
 
         }catch (e: Exception){
