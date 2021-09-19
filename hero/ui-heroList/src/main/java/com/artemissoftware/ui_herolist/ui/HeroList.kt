@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import coil.ImageLoader
 import com.artemissoftware.core.ProgressBarState
-import com.artemissoftware.ui_herolist.components.ui.HeroListItem
+import com.artemissoftware.ui_herolist.ui.HeroListItem
+import com.artemissoftware.ui_herolist.ui.HeroListState
 
 @Composable
 fun HeroList(

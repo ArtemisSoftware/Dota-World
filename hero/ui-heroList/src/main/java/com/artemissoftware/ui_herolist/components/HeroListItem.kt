@@ -1,4 +1,4 @@
-package com.artemissoftware.ui_herolist.components.ui
+package com.artemissoftware.ui_herolist.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,10 +20,8 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberImagePainter
 import com.artemissoftware.hero_domain.Hero
-import com.artemissoftware.ui_herolist.HeroList
-import com.artemissoftware.ui_herolist.HeroListState
-import com.artemissoftware.ui_herolist.test.TAG_HERO_NAME
-import com.artemissoftware.ui_herolist.test.TAG_HERO_PRIMARY_ATTRIBUTE
+import com.artemissoftware.ui_herolist.ui.test.TAG_HERO_NAME
+import com.artemissoftware.ui_herolist.ui.test.TAG_HERO_PRIMARY_ATTRIBUTE
 import kotlin.math.round
 import com.artemissoftware.ui_herolist.R
 

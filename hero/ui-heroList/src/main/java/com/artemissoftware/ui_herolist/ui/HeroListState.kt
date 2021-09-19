@@ -1,4 +1,4 @@
-package com.artemissoftware.ui_herolist
+package com.artemissoftware.ui_herolist.ui
 
 import com.artemissoftware.core.ProgressBarState
 import com.artemissoftware.hero_domain.Hero
