@@ -17,7 +17,8 @@ import com.artemissoftware.ui_herolist.ui.HeroListState
 @Composable
 fun HeroList(
     state: HeroListState,
-    imageLoader: ImageLoader
+    imageLoader: ImageLoader,
+    navigateToDetailScreen: (Int) -> Unit,
 ){
     Box(
         modifier = Modifier.fillMaxSize()
@@ -28,7 +29,13 @@ fun HeroList(
                 .fillMaxSize()
         ){
             items(state.heros){ hero ->
-                HeroListItem(hero = hero, onSelectHero = {}, imageLoader = imageLoader)
+                HeroListItem(
+                    hero = hero,
+                    onSelectHero = { heroId ->
+                        navigateToDetailScreen(heroId)
+                    },
+                    imageLoader = imageLoader
+                )
             }
         }
 

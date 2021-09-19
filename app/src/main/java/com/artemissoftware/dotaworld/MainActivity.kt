@@ -9,13 +9,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
 import com.artemissoftware.core.DataState
 import com.artemissoftware.core.Logger
 import com.artemissoftware.core.ProgressBarState
 import com.artemissoftware.core.UIComponent
+import com.artemissoftware.dotaworld.ui.navigation.Screen
 import com.artemissoftware.dotaworld.ui.theme.DotaWorldTheme
 import com.artemissoftware.hero_interactors.HeroInteractors
+import com.artemissoftware.ui_herodetail.HeroDetail
 import com.artemissoftware.ui_herolist.HeroList
 import com.artemissoftware.ui_herolist.ui.HeroListState
 import com.artemissoftware.ui_herolist.ui.HeroListViewModel
@@ -43,23 +50,71 @@ class MainActivity : ComponentActivity() {
         setContent {
             DotaWorldTheme {
 
-                val viewModel: HeroListViewModel = hiltViewModel()
 
-                HeroList(state = viewModel.state.value, imageLoader = imageLoader)
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.HeroList.route,
+                    builder = {
+                        addHeroList(
+                            navController = navController,
+                            imageLoader = imageLoader
+                        )
+                        addHeroDetail()
+                    }
+                )
+
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    DotaWorldTheme {
-        Greeting("Android")
+
+
+
+fun NavGraphBuilder.addHeroList(
+    navController: NavController,
+    imageLoader: ImageLoader,
+) {
+    composable(
+        route = Screen.HeroList.route,
+    ){
+        val viewModel: HeroListViewModel = hiltViewModel()
+
+        HeroList(
+            state = viewModel.state.value,
+            imageLoader = imageLoader,
+            navigateToDetailScreen = { heroId ->
+                navController.navigate("${Screen.HeroDetail.route}/$heroId")
+            }
+        )
     }
 }
+
+fun NavGraphBuilder.addHeroDetail() {
+    composable(
+        route = Screen.HeroDetail.route + "/{heroId}",
+        arguments = Screen.HeroDetail.arguments,
+    ){
+        HeroDetail(it.arguments?.get("heroId") as Int?)
+    }
+}
+
+
+
+
+
+//@Composable
+//fun Greeting(name: String) {
+//    Text(text = "Hello $name!")
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    DotaWorldTheme {
+//        Greeting("Android")
+//    }
+//}
