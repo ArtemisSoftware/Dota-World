@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import coil.ImageLoader
 import com.artemissoftware.core.DataState
 import com.artemissoftware.core.Logger
 import com.artemissoftware.core.ProgressBarState
@@ -38,11 +39,19 @@ class MainActivity : ComponentActivity() {
 
     private val state: MutableState<HeroListState> = mutableStateOf(HeroListState())
     private val progressBarState: MutableState<ProgressBarState> = mutableStateOf(ProgressBarState.Idle)
-
+    private lateinit var imageLoader: ImageLoader
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+        imageLoader = ImageLoader.Builder(applicationContext)
+            .error(R.drawable.error_image)
+            .placeholder(R.drawable.white_background)
+            .availableMemoryPercentage(0.25)
+            .crossfade(true)
+            .build()
 
 
         val getHeros = HeroInteractors.build(
@@ -86,7 +95,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaWorldTheme {
-                HeroList(state = state.value)
+                HeroList(state = state.value, imageLoader = imageLoader)
             }
         }
     }
