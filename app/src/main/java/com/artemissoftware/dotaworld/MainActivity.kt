@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.Dispatchers.IO
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -32,27 +33,15 @@ class MainActivity : ComponentActivity() {
 
 
 
-    private lateinit var imageLoader: ImageLoader
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        imageLoader = ImageLoader.Builder(applicationContext)
-            .error(R.drawable.error_image)
-            .placeholder(R.drawable.white_background)
-            .availableMemoryPercentage(0.25)
-            .crossfade(true)
-            .build()
-
-
-
-
-
         setContent {
             DotaWorldTheme {
-
 
                 val viewModel: HeroListViewModel = hiltViewModel()
 
