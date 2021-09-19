@@ -28,11 +28,13 @@ import com.artemissoftware.hero_interactors.HeroInteractors
 import com.artemissoftware.ui_herolist.HeroList
 import com.artemissoftware.ui_herolist.HeroListState
 import com.squareup.sqldelight.android.AndroidSqliteDriver
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.Dispatchers.IO
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
 
