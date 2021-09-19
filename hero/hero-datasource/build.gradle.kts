@@ -3,7 +3,7 @@ apply {
 }
 
 plugins {
-    //kotlin(KotlinPlugins.serialization) version Kotlin.version
+    kotlin(KotlinPlugins.serialization) version Kotlin.version
     id(SqlDelight.plugin)
 }
 

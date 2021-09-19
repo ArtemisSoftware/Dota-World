@@ -24,6 +24,7 @@ import com.artemissoftware.core.UIComponent
 import com.artemissoftware.dotaworld.ui.theme.DotaWorldTheme
 import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_interactors.HeroInteractors
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,7 +43,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
-        val getHeros = HeroInteractors.build().getHeros
+        val getHeros = HeroInteractors.build(
+            sqlDriver = AndroidSqliteDriver(
+                schema = HeroInteractors.schema,
+                context = this,
+                name = HeroInteractors.name
+            )
+        ).getHeros
         val logger = Logger("GetHerosTest")
 
 
