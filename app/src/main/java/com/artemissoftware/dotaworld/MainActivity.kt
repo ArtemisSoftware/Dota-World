@@ -23,6 +23,7 @@ import com.artemissoftware.dotaworld.ui.navigation.Screen
 import com.artemissoftware.dotaworld.ui.theme.DotaWorldTheme
 import com.artemissoftware.hero_interactors.HeroInteractors
 import com.artemissoftware.ui_herodetail.HeroDetail
+import com.artemissoftware.ui_herodetail.ui.HeroDetailViewModel
 import com.artemissoftware.ui_herolist.HeroList
 import com.artemissoftware.ui_herolist.ui.HeroListState
 import com.artemissoftware.ui_herolist.ui.HeroListViewModel
@@ -98,7 +99,10 @@ fun NavGraphBuilder.addHeroDetail() {
         route = Screen.HeroDetail.route + "/{heroId}",
         arguments = Screen.HeroDetail.arguments,
     ){
-        HeroDetail(it.arguments?.get("heroId") as Int?)
+
+        val viewModel: HeroDetailViewModel = hiltViewModel()
+
+        HeroDetail(state = viewModel.state.value)
     }
 }
 
