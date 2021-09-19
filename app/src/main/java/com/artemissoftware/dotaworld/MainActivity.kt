@@ -24,6 +24,8 @@ import com.artemissoftware.core.UIComponent
 import com.artemissoftware.dotaworld.ui.theme.DotaWorldTheme
 import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_interactors.HeroInteractors
+import com.artemissoftware.ui_herolist.HeroList
+import com.artemissoftware.ui_herolist.HeroListState
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -34,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-    private val heros: MutableState<List<Hero>> = mutableStateOf(listOf())
+    private val state: MutableState<HeroListState> = mutableStateOf(HeroListState())
     private val progressBarState: MutableState<ProgressBarState> = mutableStateOf(ProgressBarState.Idle)
 
 
@@ -70,7 +72,7 @@ class MainActivity : ComponentActivity() {
                 }
 
                 is DataState.Data -> {
-                    heros.value = dataState.data?: listOf()
+                    state.value = state.value.copy(heros = dataState.data?: listOf())
                 }
 
                 is DataState.Loading -> {
@@ -84,20 +86,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             DotaWorldTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ){
-                    LazyColumn{
-                        items(heros.value){ hero ->
-                            Text(hero.localizedName)
-                        }
-                    }
-                    if(progressBarState.value is ProgressBarState.Loading){
-                        CircularProgressIndicator(
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                    }
-                }
+                HeroList(state = state.value)
             }
         }
     }
