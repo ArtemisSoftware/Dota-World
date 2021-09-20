@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.artemissoftware.core.DataState
 import com.artemissoftware.core.Logger
 import com.artemissoftware.core.UIComponent
+import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_interactors.GetHeros
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -27,10 +28,35 @@ class HeroListViewModel @Inject constructor(
 
     fun onTriggerEvent(event: HeroListEvents){
         when(event){
+
             is HeroListEvents.GetHeros -> {
                 getHeros()
             }
+
+            is HeroListEvents.FilterHeros -> {
+                filterHeros()
+            }
+
+            is HeroListEvents.UpdateHeroName -> {
+                updateHeroName(event.heroName)
+            }
         }
+    }
+
+
+
+    private fun updateHeroName(heroName: String) {
+        state.value = state.value.copy(heroName = heroName)
+    }
+
+
+    private fun filterHeros(){
+
+        val filteredList: MutableList<Hero> = state.value.heros.filter {
+            it.localizedName.lowercase().contains(state.value.heroName.lowercase())
+        }.toMutableList()
+
+        state.value = state.value.copy(filteredHeros = filteredList)
     }
 
     private fun getHeros(){
@@ -51,6 +77,7 @@ class HeroListViewModel @Inject constructor(
 
                 is DataState.Data -> {
                     state.value = state.value.copy(heros = dataState.data?: listOf())
+                    filterHeros()
                 }
 
                 is DataState.Loading -> {

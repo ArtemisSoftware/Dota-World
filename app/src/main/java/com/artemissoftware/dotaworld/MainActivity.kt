@@ -89,6 +89,7 @@ fun NavGraphBuilder.addHeroList(
 
         HeroList(
             state = viewModel.state.value,
+            events = viewModel::onTriggerEvent,
             imageLoader = imageLoader,
             navigateToDetailScreen = { heroId ->
                 navController.navigate("${Screen.HeroDetail.route}/$heroId")

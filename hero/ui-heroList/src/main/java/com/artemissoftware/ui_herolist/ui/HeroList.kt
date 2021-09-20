@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.ImageLoader
 import com.artemissoftware.core.ProgressBarState
 import com.artemissoftware.ui_herolist.components.HeroListToolbar
+import com.artemissoftware.ui_herolist.ui.HeroListEvents
 import com.artemissoftware.ui_herolist.ui.HeroListItem
 import com.artemissoftware.ui_herolist.ui.HeroListState
 
@@ -23,6 +24,7 @@ import com.artemissoftware.ui_herolist.ui.HeroListState
 @Composable
 fun HeroList(
     state: HeroListState,
+    events: (HeroListEvents) -> Unit,
     imageLoader: ImageLoader,
     navigateToDetailScreen: (Int) -> Unit,
 ){
@@ -33,15 +35,13 @@ fun HeroList(
         Column {
 
 
-            val name = remember { mutableStateOf("") }
-
             HeroListToolbar(
-                heroName = name.value,
+                heroName = state.heroName,
                 onHeroNameChanged = { heroName ->
-                    name.value = heroName
+                    events(HeroListEvents.UpdateHeroName(heroName))
                 },
                 onExecuteSearch = {
-
+                    events(HeroListEvents.FilterHeros)
                 },
                 onShowFilterDialog = {
 
@@ -52,7 +52,7 @@ fun HeroList(
                 modifier = Modifier
                     .fillMaxSize()
             ){
-                items(state.heros){ hero ->
+                items(state.filteredHeros){ hero ->
                     HeroListItem(
                         hero = hero,
                         onSelectHero = { heroId ->
