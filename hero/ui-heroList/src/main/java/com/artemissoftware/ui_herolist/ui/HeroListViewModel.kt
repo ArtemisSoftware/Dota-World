@@ -8,6 +8,8 @@ import com.artemissoftware.core.DataState
 import com.artemissoftware.core.Logger
 import com.artemissoftware.core.UIComponent
 import com.artemissoftware.hero_domain.Hero
+import com.artemissoftware.hero_domain.HeroFilter
+import com.artemissoftware.hero_interactors.FilterHeros
 import com.artemissoftware.hero_interactors.GetHeros
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HeroListViewModel @Inject constructor(
     private val getHeros: GetHeros,
+    private val filterHeros: FilterHeros,
     private val logger: Logger
 ): ViewModel(){
 
@@ -37,13 +40,20 @@ class HeroListViewModel @Inject constructor(
                 filterHeros()
             }
 
+            is HeroListEvents.UpdateHeroFilter -> {
+                updateHeroFilter(event.heroFilter)
+            }
+
             is HeroListEvents.UpdateHeroName -> {
                 updateHeroName(event.heroName)
             }
         }
     }
 
-
+    private fun updateHeroFilter(heroFilter: HeroFilter){
+        state.value = state.value.copy(heroFilter = heroFilter)
+        filterHeros()
+    }
 
     private fun updateHeroName(heroName: String) {
         state.value = state.value.copy(heroName = heroName)
@@ -52,10 +62,12 @@ class HeroListViewModel @Inject constructor(
 
     private fun filterHeros(){
 
-        val filteredList: MutableList<Hero> = state.value.heros.filter {
-            it.localizedName.lowercase().contains(state.value.heroName.lowercase())
-        }.toMutableList()
-
+        val filteredList = filterHeros.execute(
+            current = state.value.heros,
+            heroName = state.value.heroName,
+            heroFilter = state.value.heroFilter,
+            attributeFilter = state.value.primaryAttribute,
+        )
         state.value = state.value.copy(filteredHeros = filteredList)
     }
 

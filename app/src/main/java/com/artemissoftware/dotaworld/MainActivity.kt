@@ -3,6 +3,7 @@ package com.artemissoftware.dotaworld
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
     lateinit var imageLoader: ImageLoader
 
 
+    @ExperimentalAnimationApi
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +79,7 @@ class MainActivity : ComponentActivity() {
 
 
 
+@ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.addHeroList(
     navController: NavController,

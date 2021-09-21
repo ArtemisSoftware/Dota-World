@@ -1,5 +1,6 @@
 package com.artemissoftware.ui_herolist
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import coil.ImageLoader
 import com.artemissoftware.core.ProgressBarState
+import com.artemissoftware.ui_herolist.components.HeroListFilter
 import com.artemissoftware.ui_herolist.components.HeroListToolbar
 import com.artemissoftware.ui_herolist.ui.HeroListEvents
 import com.artemissoftware.ui_herolist.ui.HeroListItem
 import com.artemissoftware.ui_herolist.ui.HeroListState
 
+@ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
 fun HeroList(
@@ -65,6 +68,16 @@ fun HeroList(
 
         }
 
+
+        HeroListFilter(
+            heroFilter = state.heroFilter,
+            onUpdateHeroFilter = { heroFilter ->
+                events(HeroListEvents.UpdateHeroFilter(heroFilter))
+            },
+            onCloseDialog = {
+
+            }
+        )
 
 
         if(state.progressBarState is ProgressBarState.Loading){
