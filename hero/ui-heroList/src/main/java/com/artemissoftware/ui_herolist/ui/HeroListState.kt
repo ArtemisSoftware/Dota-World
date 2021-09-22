@@ -1,6 +1,8 @@
 package com.artemissoftware.ui_herolist.ui
 
 import com.artemissoftware.core.domain.ProgressBarState
+import com.artemissoftware.core.domain.Queue
+import com.artemissoftware.core.domain.UIComponent
 import com.artemissoftware.core.domain.UIComponentState
 import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_domain.HeroAttribute
@@ -17,4 +19,6 @@ data class HeroListState(
     val primaryAttrFilter: HeroAttribute = HeroAttribute.Unknown,
 
     val filterDialogState: UIComponentState = UIComponentState.Hide, // show/hide the filter dialog
+
+    val errorQueue: Queue<UIComponent> = Queue(mutableListOf())
 )
