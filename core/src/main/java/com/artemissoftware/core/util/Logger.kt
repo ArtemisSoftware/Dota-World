@@ -1,4 +1,4 @@
-package com.artemissoftware.core
+package com.artemissoftware.core.util
 
 class Logger(
     private val tag: String,

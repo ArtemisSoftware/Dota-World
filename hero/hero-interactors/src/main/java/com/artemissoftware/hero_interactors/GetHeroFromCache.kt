@@ -1,7 +1,7 @@
 package com.artemissoftware.hero_interactors
-import com.artemissoftware.core.DataState
-import com.artemissoftware.core.ProgressBarState
-import com.artemissoftware.core.UIComponent
+import com.artemissoftware.core.domain.DataState
+import com.artemissoftware.core.domain.ProgressBarState
+import com.artemissoftware.core.domain.UIComponent
 import com.artemissoftware.hero_datasource.cache.HeroCache
 import com.artemissoftware.hero_domain.Hero
 import kotlinx.coroutines.flow.Flow
@@ -32,7 +32,8 @@ class GetHeroFromCache(
 
             e.printStackTrace()
 
-            emit(DataState.Response<Hero>(
+            emit(
+                DataState.Response<Hero>(
                 uiComponent = UIComponent.Dialog(
                     title = "Error",
                     description = e.message?: "Unknown error"

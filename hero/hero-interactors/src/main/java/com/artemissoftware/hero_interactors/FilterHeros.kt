@@ -1,7 +1,7 @@
 package com.artemissoftware.hero_interactors
 
 
-import com.artemissoftware.core.FilterOrder
+import com.artemissoftware.core.domain.FilterOrder
 import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_domain.HeroAttribute
 import com.artemissoftware.hero_domain.HeroFilter

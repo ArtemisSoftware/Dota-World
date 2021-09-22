@@ -1,6 +1,6 @@
 package com.artemissoftware.hero_domain
 
-import com.artemissoftware.core.FilterOrder
+import com.artemissoftware.core.domain.FilterOrder
 
 sealed class HeroFilter(val uiValue: String,) {
 

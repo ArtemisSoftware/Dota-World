@@ -1,6 +1,6 @@
 package com.artemissoftware.dotaworld.di
 
-import com.artemissoftware.core.Logger
+import com.artemissoftware.core.util.Logger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +13,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideLogger(): Logger{
+    fun provideLogger(): Logger {
         return Logger(
             tag = "AppDebug",
             isDebug = true

@@ -4,10 +4,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.artemissoftware.core.DataState
-import com.artemissoftware.core.Logger
-import com.artemissoftware.core.UIComponent
-import com.artemissoftware.hero_domain.Hero
+import com.artemissoftware.core.domain.DataState
+import com.artemissoftware.core.domain.UIComponent
+import com.artemissoftware.core.util.Logger
 import com.artemissoftware.hero_domain.HeroFilter
 import com.artemissoftware.hero_interactors.FilterHeros
 import com.artemissoftware.hero_interactors.GetHeros
@@ -46,6 +45,10 @@ class HeroListViewModel @Inject constructor(
 
             is HeroListEvents.UpdateHeroName -> {
                 updateHeroName(event.heroName)
+            }
+
+            is HeroListEvents.UpdateFilterDialogState -> {
+                state.value = state.value.copy(filterDialogState = event.uiComponentState)
             }
         }
     }

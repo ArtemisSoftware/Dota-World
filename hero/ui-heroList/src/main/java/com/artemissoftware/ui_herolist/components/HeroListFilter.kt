@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.artemissoftware.core.FilterOrder
+import com.artemissoftware.core.domain.FilterOrder
 import com.artemissoftware.hero_domain.HeroFilter
 import com.artemissoftware.ui_herolist.ui.test.TAG_HERO_FILTER_DIALOG
 import com.artemissoftware.ui_herolist.ui.test.TAG_HERO_FILTER_DIALOG_DONE

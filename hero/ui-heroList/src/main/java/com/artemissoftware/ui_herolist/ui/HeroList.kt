@@ -8,14 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import coil.ImageLoader
-import com.artemissoftware.core.ProgressBarState
+import com.artemissoftware.core.domain.ProgressBarState
+import com.artemissoftware.core.domain.UIComponentState
 import com.artemissoftware.ui_herolist.components.HeroListFilter
 import com.artemissoftware.ui_herolist.components.HeroListToolbar
 import com.artemissoftware.ui_herolist.ui.HeroListEvents
@@ -47,7 +46,7 @@ fun HeroList(
                     events(HeroListEvents.FilterHeros)
                 },
                 onShowFilterDialog = {
-
+                    events(HeroListEvents.UpdateFilterDialogState(UIComponentState.Show))
                 }
             )
 
@@ -68,16 +67,17 @@ fun HeroList(
 
         }
 
-
-        HeroListFilter(
-            heroFilter = state.heroFilter,
-            onUpdateHeroFilter = { heroFilter ->
-                events(HeroListEvents.UpdateHeroFilter(heroFilter))
-            },
-            onCloseDialog = {
-
-            }
-        )
+        if(state.filterDialogState is UIComponentState.Show){
+            HeroListFilter(
+                heroFilter = state.heroFilter,
+                onUpdateHeroFilter = { heroFilter ->
+                    events(HeroListEvents.UpdateHeroFilter(heroFilter))
+                },
+                onCloseDialog = {
+                    events(HeroListEvents.UpdateFilterDialogState(UIComponentState.Hide))
+                }
+            )
+        }
 
 
         if(state.progressBarState is ProgressBarState.Loading){
