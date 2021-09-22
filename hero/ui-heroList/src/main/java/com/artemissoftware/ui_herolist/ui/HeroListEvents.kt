@@ -1,6 +1,7 @@
 package com.artemissoftware.ui_herolist.ui
 
 import com.artemissoftware.core.domain.UIComponentState
+import com.artemissoftware.hero_domain.HeroAttribute
 import com.artemissoftware.hero_domain.HeroFilter
 
 sealed class HeroListEvents {
@@ -20,5 +21,10 @@ sealed class HeroListEvents {
 
     data class UpdateFilterDialogState(
         val uiComponentState: UIComponentState
+    ): HeroListEvents()
+
+
+    data class UpdateAttributeFilter(
+        val attribute: HeroAttribute
     ): HeroListEvents()
 }

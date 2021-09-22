@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.artemissoftware.core.domain.DataState
 import com.artemissoftware.core.domain.UIComponent
 import com.artemissoftware.core.util.Logger
+import com.artemissoftware.hero_domain.HeroAttribute
 import com.artemissoftware.hero_domain.HeroFilter
 import com.artemissoftware.hero_interactors.FilterHeros
 import com.artemissoftware.hero_interactors.GetHeros
@@ -50,7 +51,17 @@ class HeroListViewModel @Inject constructor(
             is HeroListEvents.UpdateFilterDialogState -> {
                 state.value = state.value.copy(filterDialogState = event.uiComponentState)
             }
+
+            is HeroListEvents.UpdateAttributeFilter -> {
+                updateAttributeFilter(event.attribute)
+            }
         }
+    }
+
+
+    private fun updateAttributeFilter(attribute: HeroAttribute) {
+        state.value = state.value.copy(primaryAttrFilter = attribute)
+        filterHeros()
     }
 
     private fun updateHeroFilter(heroFilter: HeroFilter){
@@ -69,7 +80,7 @@ class HeroListViewModel @Inject constructor(
             current = state.value.heros,
             heroName = state.value.heroName,
             heroFilter = state.value.heroFilter,
-            attributeFilter = state.value.primaryAttribute,
+            attributeFilter = state.value.primaryAttrFilter,
         )
         state.value = state.value.copy(filteredHeros = filteredList)
     }

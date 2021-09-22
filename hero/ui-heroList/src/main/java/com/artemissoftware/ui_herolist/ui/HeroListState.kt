@@ -14,7 +14,7 @@ data class HeroListState(
     val heroName: String = "",
 
     val heroFilter: HeroFilter = HeroFilter.Hero(),
-    val primaryAttribute: HeroAttribute = HeroAttribute.Unknown,
+    val primaryAttrFilter: HeroAttribute = HeroAttribute.Unknown,
 
     val filterDialogState: UIComponentState = UIComponentState.Hide, // show/hide the filter dialog
 )
