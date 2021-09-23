@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.artemissoftware.core.domain.DataState
+import com.artemissoftware.core.domain.Queue
 import com.artemissoftware.core.domain.UIComponent
 import com.artemissoftware.core.util.Logger
 import com.artemissoftware.hero_domain.HeroAttribute
@@ -93,7 +94,7 @@ class HeroListViewModel @Inject constructor(
                 is DataState.Response -> {
                     when(dataState.uiComponent){
                         is UIComponent.Dialog -> {
-                            logger.log((dataState.uiComponent as UIComponent.Dialog).description)
+                            appendToMessageQueue(dataState.uiComponent)
                         }
                         is UIComponent.None -> {
                             logger.log((dataState.uiComponent as UIComponent.None).message)
@@ -112,4 +113,13 @@ class HeroListViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    private fun appendToMessageQueue(uiComponent: UIComponent){
+        val queue = state.value.errorQueue
+        queue.add(uiComponent)
+        state.value = state.value.copy(errorQueue = Queue(mutableListOf())) // force recompose
+        state.value = state.value.copy(errorQueue = queue)
+    }
+
+
 }
