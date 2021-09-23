@@ -35,6 +35,10 @@ fun HeroDetail(
 ) {
     DefaultScreenUI(
         progressBarState = state.progressBarState,
+        queue = state.errorQueue,
+        onRemoveHeadFromQueue = {
+            // TODO(remove head message)
+        },
     ) {
         state.hero?.let{ hero ->
             LazyColumn(

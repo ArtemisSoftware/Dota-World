@@ -33,6 +33,10 @@ fun HeroList(
 ){
     DefaultScreenUI(
         progressBarState = state.progressBarState,
+        queue = state.errorQueue,
+        onRemoveHeadFromQueue = {
+            // TODO(remove head message)
+        },
     ) {
         Box(
             modifier = Modifier

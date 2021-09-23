@@ -40,6 +40,7 @@ class GetHeros(
 
             emit(DataState.Data(cachedHeros))
 
+            throw Exception("Something went wrong")
 
         }catch (e: Exception){
             e.printStackTrace()
