@@ -35,7 +35,7 @@ fun HeroList(
         progressBarState = state.progressBarState,
         queue = state.errorQueue,
         onRemoveHeadFromQueue = {
-            // TODO(remove head message)
+            events(HeroListEvents.OnRemoveHeadFromQueue)
         },
     ) {
         Box(

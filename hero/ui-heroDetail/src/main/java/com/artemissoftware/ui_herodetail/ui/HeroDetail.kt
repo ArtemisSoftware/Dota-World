@@ -24,6 +24,7 @@ import com.artemissoftware.components.DefaultScreenUI
 import com.artemissoftware.hero_domain.Hero
 import com.artemissoftware.hero_domain.maxAttackDmg
 import com.artemissoftware.hero_domain.minAttackDmg
+import com.artemissoftware.ui_herodetail.ui.HeroDetailEvents
 import com.artemissoftware.ui_herodetail.ui.HeroDetailState
 import kotlin.math.round
 
@@ -32,12 +33,13 @@ import kotlin.math.round
 fun HeroDetail(
     state: HeroDetailState,
     imageLoader: ImageLoader,
+    events: (HeroDetailEvents) -> Unit,
 ) {
     DefaultScreenUI(
         progressBarState = state.progressBarState,
         queue = state.errorQueue,
         onRemoveHeadFromQueue = {
-            // TODO(remove head message)
+            events(HeroDetailEvents.OnRemoveHeadFromQueue)
         },
     ) {
         state.hero?.let{ hero ->
